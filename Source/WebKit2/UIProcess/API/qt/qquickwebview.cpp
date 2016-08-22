@@ -350,20 +350,20 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
     pageEventHandler.reset(new QtWebPageEventHandler(webPage.get(), pageView.data(), q_ptr));
 
     {
-        WKPageFindClient findClient;
-        memset(&findClient, 0, sizeof(WKPageFindClient));
-        findClient.version = kWKPageFindClientCurrentVersion;
-        findClient.clientInfo = this;
+        WKPageFindClientV0 findClient;
+        memset(&findClient, 0, sizeof(WKPageFindClientV0));
+        findClient.base.version = 0;
+        findClient.base.clientInfo = this;
         findClient.didFindString = didFindString;
         findClient.didFailToFindString = didFailToFindString;
-        WKPageSetPageFindClient(webPage.get(), &findClient);
+        WKPageSetPageFindClient(webPage.get(), &findClient.base);
     }
 
     {
-        WKPageLoaderClient loadClient;
-        memset(&loadClient, 0, sizeof(WKPageLoaderClient));
-        loadClient.version = kWKPageLoaderClientCurrentVersion;
-        loadClient.clientInfo = this;
+        WKPageLoaderClientV0 loadClient;
+        memset(&loadClient, 0, sizeof(WKPageLoaderClientV0));
+        loadClient.base.version = 0;
+        loadClient.base.clientInfo = this;
         loadClient.didStartProvisionalLoadForFrame = didStartProvisionalLoadForFrame;
         loadClient.didReceiveServerRedirectForProvisionalLoadForFrame = didReceiveServerRedirectForProvisionalLoadForFrame;
         loadClient.didFailProvisionalLoadWithErrorForFrame = didFailLoad;
@@ -378,7 +378,7 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
         loadClient.didChangeBackForwardList = didChangeBackForwardList;
         loadClient.processDidBecomeUnresponsive = processDidBecomeUnresponsive;
         loadClient.processDidBecomeResponsive = processDidBecomeResponsive;
-        WKPageSetPageLoaderClient(webPage.get(), &loadClient);
+        WKPageSetPageLoaderClient(webPage.get(), &loadClient.base);
     }
 
     pagePolicyClient.reset(new QtWebPagePolicyClient(webPage.get(), q_ptr));
