@@ -23,19 +23,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "config.h"
-#include "CustomProtocolManagerImpl.h"
+#include "NetworkProcess.h"
 
-#include "ChildProcess.h"
+#include <WebCore/CertificateInfo.h>
+
+using namespace WebCore;
 
 namespace WebKit {
 
-CustomProtocolManagerImpl::CustomProtocolManagerImpl(ChildProcess*)
+void NetworkProcess::platformInitializeNetworkProcess(const NetworkProcessCreationParameters&)
 {
 }
 
-CustomProtocolManagerImpl::~CustomProtocolManagerImpl()
+void NetworkProcess::platformTerminate()
+{
+}
+
+void NetworkProcess::allowSpecificHTTPSCertificateForHost(const CertificateInfo&, const String&)
+{
+}
+
+void NetworkProcess::clearCacheForAllOrigins(uint32_t)
+{
+}
+
+void NetworkProcess::clearDiskCache(std::chrono::system_clock::time_point, std::function<void()>)
+{
+}
+
+void NetworkProcess::platformSetCacheModel(CacheModel)
 {
 }
 

@@ -49,6 +49,11 @@ void WebInspectorProxy::platformDidClose()
     notImplemented();
 }
 
+void WebKit::WebInspectorProxy::platformInvalidate()
+{
+    notImplemented();
+}
+
 void WebInspectorProxy::platformHide()
 {
     notImplemented();
@@ -123,6 +128,12 @@ void WebInspectorProxy::platformAppend(const String&, const String&)
 }
 
 String WebInspectorProxy::inspectorPageURL() const
+{
+    notImplemented();
+    return String();
+}
+
+String WebInspectorProxy::inspectorTestPageURL()
 {
     notImplemented();
     return String();
