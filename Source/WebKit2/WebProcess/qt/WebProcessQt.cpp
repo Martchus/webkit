@@ -115,19 +115,25 @@ void WebProcess::platformInitializeWebProcess(WebProcessCreationParameters&& par
 
     m_networkAccessManager = new QtNetworkAccessManager(this);
 
+    // QTFIXME
+#if ENABLE(SECCOMP_FILTERS)
     if (!parameters.cookieStorageDirectory.isEmpty()) {
         WebCore::SharedCookieJarQt* jar = WebCore::SharedCookieJarQt::create(parameters.cookieStorageDirectory);
         m_networkAccessManager->setCookieJar(jar);
         // Do not let QNetworkAccessManager delete the jar.
         jar->setParent(0);
     }
+#endif
 
+    // QTFIXME: leftover of old process model
+#if 0
     if (!parameters.diskCacheDirectory.isEmpty()) {
         QNetworkDiskCache* diskCache = new QNetworkDiskCache();
         diskCache->setCacheDirectory(parameters.diskCacheDirectory);
         // The m_networkAccessManager takes ownership of the diskCache object upon the following call.
         m_networkAccessManager->setCache(diskCache);
     }
+#endif
 
 #if defined(Q_OS_MACX)
     pid_t ppid = getppid();

@@ -1068,7 +1068,7 @@ void WebProcess::ensureWebToDatabaseProcessConnection()
 #if PLATFORM(QT)
 void WebProcess::startTransfer(uint64_t downloadID, const String& destination)
 {
-    downloadManager().startTransfer(downloadID, destination);
+//    downloadManager().startTransfer(downloadID, destination);
 }
 #endif
 

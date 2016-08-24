@@ -44,22 +44,24 @@ void WebPreferences::platformInitializeStore()
     if (!m_identifier)
         return;
 
-    QHash <String, QFont::StyleHint> qFontHint;
+// QTFIXME
 
-    qFontHint["StandardFontFamily"] = QFont::Serif;
-    qFontHint["CursiveFontFamily"] = QFont::Cursive;
-    qFontHint["FantasyFontFamily"] = QFont::Fantasy;
-    qFontHint["FixedFontFamily"] = QFont::Monospace;
-    qFontHint["SansSerifFontFamily"] = QFont::SansSerif;
-    qFontHint["SerifFontFamily"] = QFont::Serif;
-    qFontHint["PictographFontFamily"] = QFont::Serif;
+//    QHash <String, QFont::StyleHint> qFontHint;
 
-#define INITIALIZE_FONT_PREFERENCES(KeyUpper, KeyLower, TypeName, Type, DefaultValue) \
-    set##TypeName##ValueIfInUserDefaults(WebPreferencesKey::KeyLower##Key(), m_store, qFontHint);
+//    qFontHint["StandardFontFamily"] = QFont::Serif;
+//    qFontHint["CursiveFontFamily"] = QFont::Cursive;
+//    qFontHint["FantasyFontFamily"] = QFont::Fantasy;
+//    qFontHint["FixedFontFamily"] = QFont::Monospace;
+//    qFontHint["SansSerifFontFamily"] = QFont::SansSerif;
+//    qFontHint["SerifFontFamily"] = QFont::Serif;
+//    qFontHint["PictographFontFamily"] = QFont::Serif;
 
-    FOR_EACH_WEBKIT_FONT_FAMILY_PREFERENCE(INITIALIZE_FONT_PREFERENCES)
+// #define INITIALIZE_FONT_PREFERENCES(KeyUpper, KeyLower, TypeName, Type, DefaultValue) \
+//    set##TypeName##ValueIfInUserDefaults(WebPreferencesKey::KeyLower##Key(), m_store, qFontHint);
 
-#undef INITIALIZE_FONT_PREFERENCES
+//    FOR_EACH_WEBKIT_FONT_FAMILY_PREFERENCE(INITIALIZE_FONT_PREFERENCES)
+
+// #undef INITIALIZE_FONT_PREFERENCES
 }
 
 void WebPreferences::platformUpdateStringValueForKey(const String&, const String&)
