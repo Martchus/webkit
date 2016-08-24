@@ -112,7 +112,7 @@ void WebInspectorProxy::platformSetAttachedWindowWidth(unsigned)
     notImplemented();
 }
 
-void WebInspectorProxy::platformSetToolbarHeight(unsigned)
+void WebKit::WebInspectorProxy::platformStartWindowDrag()
 {
     notImplemented();
 }
@@ -127,7 +127,7 @@ void WebInspectorProxy::platformAppend(const String&, const String&)
     notImplemented();
 }
 
-String WebInspectorProxy::inspectorPageURL() const
+String WebInspectorProxy::inspectorPageURL()
 {
     notImplemented();
     return String();
@@ -139,7 +139,7 @@ String WebInspectorProxy::inspectorTestPageURL()
     return String();
 }
 
-String WebInspectorProxy::inspectorBaseURL() const
+String WebInspectorProxy::inspectorBaseURL()
 {
     notImplemented();
     return String();
