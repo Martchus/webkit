@@ -171,6 +171,10 @@ void PlatformWebView::removeChromeInputField()
 {
 }
 
+void PlatformWebView::changeWindowScaleIfNeeded(float)
+{
+}
+
 void PlatformWebView::makeWebViewFirstResponder()
 {
 }
@@ -199,6 +203,10 @@ bool PlatformWebView::viewSupportsOptions(WKDictionaryRef options) const
 }
 
 void PlatformWebView::didInitializeClients()
+{
+}
+
+void PlatformWebView::setNavigationGesturesEnabled(bool)
 {
 }
 
