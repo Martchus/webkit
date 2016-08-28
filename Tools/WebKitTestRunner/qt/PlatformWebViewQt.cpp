@@ -195,11 +195,12 @@ bool PlatformWebView::windowSnapshotEnabled()
     return result;
 }
 
-bool PlatformWebView::viewSupportsOptions(WKDictionaryRef options) const
+bool PlatformWebView::viewSupportsOptions(const TestOptions& options) const
 {
-    WKRetainPtr<WKStringRef> useFixedLayoutKey(AdoptWK, WKStringCreateWithUTF8CString("UseFixedLayout"));
+    if (m_options.useFixedLayout != options.useFixedLayout)
+        return false;
 
-    return m_usingFixedLayout == (options ? WKBooleanGetValue(static_cast<WKBooleanRef>(WKDictionaryGetItemForKey(options, useFixedLayoutKey.get()))) : false);
+    return true;
 }
 
 void PlatformWebView::didInitializeClients()
