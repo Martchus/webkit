@@ -8,3 +8,7 @@ if (ENABLE_TEST_SUPPORT)
     add_subdirectory(DumpRenderTree)
     add_subdirectory(ImageDiff)
 endif ()
+
+if (ENABLE_WEBKIT2)
+    add_subdirectory(WebKitTestRunner)
+endif ()
