@@ -84,16 +84,15 @@ private:
     QQuickWebView* m_view;
 };
 
-PlatformWebView::PlatformWebView(WKContextRef contextRef, WKPageGroupRef pageGroupRef, WKPageRef /* relatedPage */, WKDictionaryRef options)
+PlatformWebView::PlatformWebView(WKPageConfigurationRef configuration, const TestOptions& options)
     : m_windowIsKey(true)
     , m_options(options)
     , m_modalEventLoop(0)
 {
-    WKRetainPtr<WKStringRef> useFixedLayoutKey(AdoptWK, WKStringCreateWithUTF8CString("UseFixedLayout"));
-    m_usingFixedLayout = options ? WKBooleanGetValue(static_cast<WKBooleanRef>(WKDictionaryGetItemForKey(options, useFixedLayoutKey.get()))) : false;
+    m_usingFixedLayout = options.useFixedLayout;
     QQuickWebViewExperimental::setFlickableViewportEnabled(m_usingFixedLayout);
 
-    m_view = new QQuickWebView(contextRef, pageGroupRef);
+    m_view = new QQuickWebView(configuration);
     m_view->setAllowAnyHTTPSCertificateForLocalHost(true);
     m_view->componentComplete();
 
