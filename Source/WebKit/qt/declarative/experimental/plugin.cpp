@@ -19,16 +19,16 @@
 
 #include "config.h"
 
-#include "private/qquicknetworkreply_p.h"
-#include "private/qquicknetworkrequest_p.h"
-#include "private/qquickwebpage_p.h"
-#include "private/qquickwebview_p.h"
-#include "private/qtwebsecurityorigin_p.h"
-#include "private/qwebdownloaditem_p.h"
-#include "private/qwebkittest_p.h"
-#include "private/qwebnavigationhistory_p.h"
-#include "private/qwebpermissionrequest_p.h"
-#include "private/qwebpreferences_p.h"
+#include "qquicknetworkreply_p.h"
+#include "qquicknetworkrequest_p.h"
+#include "qquickwebpage_p.h"
+#include "qquickwebview_p.h"
+#include "qtwebsecurityorigin_p.h"
+#include "qwebdownloaditem_p.h"
+#include "qwebkittest_p.h"
+#include "qwebnavigationhistory_p.h"
+#include "qwebpermissionrequest_p.h"
+#include "qwebpreferences_p.h"
 
 #include <QtQml/qqml.h>
 #include <QtQml/qqmlextensionplugin.h>
