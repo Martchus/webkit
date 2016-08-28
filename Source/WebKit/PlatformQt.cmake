@@ -725,4 +725,8 @@ if (COMPILER_IS_GCC_OR_CLANG)
     )
 endif ()
 
+if (ENABLE_WEBKIT2)
+    add_subdirectory(qt/declarative)
+endif ()
+
 add_subdirectory(qt/tests)
