@@ -26,10 +26,11 @@
 #include "TextureMapperAnimation.h"
 #include <wtf/CurrentTime.h>
 
-#if !USE(COORDINATED_GRAPHICS)
+#if !USE(COORDINATED_GRAPHICS) || PLATFORM(QT)
 
 namespace WebCore {
 
+#if !PLATFORM(QT)
 std::unique_ptr<GraphicsLayer> GraphicsLayer::create(GraphicsLayerFactory* factory, GraphicsLayerClient& client, Type layerType)
 {
     if (!factory)
@@ -37,6 +38,7 @@ std::unique_ptr<GraphicsLayer> GraphicsLayer::create(GraphicsLayerFactory* facto
 
     return factory->createGraphicsLayer(layerType, client);
 }
+#endif
 
 GraphicsLayerTextureMapper::GraphicsLayerTextureMapper(Type layerType, GraphicsLayerClient& client)
     : GraphicsLayer(layerType, client)
