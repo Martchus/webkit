@@ -71,7 +71,7 @@ public:
 
     virtual ~QQuickWebViewPrivate();
 
-    virtual void initialize(WKContextRef contextRef = 0, WKPageGroupRef pageGroupRef = 0);
+    virtual void initialize(WKPageConfigurationRef configurationRef = 0);
 
     virtual void onComponentComplete() { }
 
@@ -181,6 +181,7 @@ protected:
     QQuickWebViewPrivate(QQuickWebView* viewport);
     RefPtr<WebKit::WebPageProxy> webPageProxy;
     WKRetainPtr<WKPageRef> webPage;
+    WKRetainPtr<WKPageConfigurationRef> pageConfiguration;
     WKRetainPtr<WKPageGroupRef> pageGroup;
 
     WebKit::QtPageClient pageClient;
@@ -227,7 +228,7 @@ class QQuickWebViewLegacyPrivate : public QQuickWebViewPrivate {
     Q_DECLARE_PUBLIC(QQuickWebView)
 public:
     QQuickWebViewLegacyPrivate(QQuickWebView* viewport);
-    void initialize(WKContextRef contextRef = 0, WKPageGroupRef pageGroupRef = 0) Q_DECL_OVERRIDE;
+    void initialize(WKPageConfigurationRef configurationRef = 0) Q_DECL_OVERRIDE;
 
     void updateViewportSize() Q_DECL_OVERRIDE;
 
@@ -239,7 +240,7 @@ class QQuickWebViewFlickablePrivate : public QQuickWebViewPrivate {
     Q_DECLARE_PUBLIC(QQuickWebView)
 public:
     QQuickWebViewFlickablePrivate(QQuickWebView* viewport);
-    void initialize(WKContextRef contextRef = 0, WKPageGroupRef pageGroupRef = 0) Q_DECL_OVERRIDE;
+    void initialize(WKPageConfigurationRef configurationRef = 0) Q_DECL_OVERRIDE;
 
     void onComponentComplete() Q_DECL_OVERRIDE;
 
