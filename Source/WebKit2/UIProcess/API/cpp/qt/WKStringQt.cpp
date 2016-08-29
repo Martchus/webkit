@@ -40,7 +40,9 @@ QString WKStringCopyQString(WKStringRef stringRef)
     if (!stringRef)
         return QString();
     const WTF::String& string = toImpl(stringRef)->string();
-    return QString(reinterpret_cast<const QChar*>(string.characters()), string.length());
+    // QTFIXME
+    return string;
+    // return QString(reinterpret_cast<const QChar*>(string.characters()), string.length());
 }
 
 namespace WebKit {
