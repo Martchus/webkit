@@ -35,7 +35,7 @@
 #if HAVE(QTTESTSUPPORT)
 #include "QtTestSupport.h"
 #endif
-#include "private/qquickwebview_p.h"
+#include "qquickwebview_p.h"
 #include "utils.h"
 #include <QRegExp>
 #include <QEvent>
