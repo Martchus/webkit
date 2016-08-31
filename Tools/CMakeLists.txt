@@ -33,7 +33,7 @@ if (WIN32)
     #add_subdirectory(DumpRenderTree)
     # TODO: Enable when Qt port ready
     if (NOT "${PORT}" STREQUAL "Qt")
-        add_subdirectory(TestWebKitAPI)
+        #        add_subdirectory(TestWebKitAPI)
         add_subdirectory(MiniBrowser/win)
     endif ()
 endif ()
