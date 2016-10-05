@@ -22,6 +22,7 @@
 
 #include "qquickwebview_p_p.h"
 #include "qwebpreferences_p_p.h"
+#include <WKPageConfigurationRef.h>
 #include <WKPageGroup.h>
 #include <WKPreferencesRef.h>
 #include <WKRetainPtr.h>
@@ -37,7 +38,7 @@ QWebPreferences* QWebPreferencesPrivate::createPreferences(QQuickWebViewPrivate*
 
 bool QWebPreferencesPrivate::testAttribute(QWebPreferencesPrivate::WebAttribute attr) const
 {
-    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(webViewPrivate->pageGroup.get());
+    WKPreferencesRef preferencesRef = WKPageConfigurationGetPreferences(webViewPrivate->pageConfiguration.get());
     switch (attr) {
     case AutoLoadImages:
         return WKPreferencesGetLoadsImagesAutomatically(preferencesRef);
@@ -95,7 +96,7 @@ bool QWebPreferencesPrivate::testAttribute(QWebPreferencesPrivate::WebAttribute 
 
 void QWebPreferencesPrivate::setAttribute(QWebPreferencesPrivate::WebAttribute attr, bool enable)
 {
-    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(webViewPrivate->pageGroup.get());
+    WKPreferencesRef preferencesRef = WKPageConfigurationGetPreferences(webViewPrivate->pageConfiguration.get());
     switch (attr) {
     case AutoLoadImages:
         WKPreferencesSetLoadsImagesAutomatically(preferencesRef, enable);
@@ -196,7 +197,7 @@ void QWebPreferencesPrivate::initializeDefaultFontSettings()
 
 void QWebPreferencesPrivate::setFontFamily(QWebPreferencesPrivate::FontFamily which, const QString& family)
 {
-    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(webViewPrivate->pageGroup.get());
+    WKPreferencesRef preferencesRef = WKPageConfigurationGetPreferences(webViewPrivate->pageConfiguration.get());
     WKRetainPtr<WKStringRef> familyRef = adoptWK(WKStringCreateWithQString(family));
     switch (which) {
     case StandardFont:
@@ -224,7 +225,7 @@ void QWebPreferencesPrivate::setFontFamily(QWebPreferencesPrivate::FontFamily wh
 
 QString QWebPreferencesPrivate::fontFamily(QWebPreferencesPrivate::FontFamily which) const
 {
-    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(webViewPrivate->pageGroup.get());
+    WKPreferencesRef preferencesRef = WKPageConfigurationGetPreferences(webViewPrivate->pageConfiguration.get());
     switch (which) {
     case StandardFont:
         return adoptToQString(WKPreferencesCopyStandardFontFamily(preferencesRef));
@@ -244,8 +245,8 @@ QString QWebPreferencesPrivate::fontFamily(QWebPreferencesPrivate::FontFamily wh
 }
 
 void QWebPreferencesPrivate::setFontSize(QWebPreferencesPrivate::FontSizeType type, unsigned size)
-{    
-    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(webViewPrivate->pageGroup.get());
+{
+    WKPreferencesRef preferencesRef = WKPageConfigurationGetPreferences(webViewPrivate->pageConfiguration.get());
     switch (type) {
     case MinimumFontSize:
         WKPreferencesSetMinimumFontSize(preferencesRef, static_cast<uint32_t>(size));
@@ -263,7 +264,7 @@ void QWebPreferencesPrivate::setFontSize(QWebPreferencesPrivate::FontSizeType ty
 
 unsigned QWebPreferencesPrivate::fontSize(QWebPreferencesPrivate::FontSizeType type) const
 {
-    WKPreferencesRef preferencesRef = WKPageGroupGetPreferences(webViewPrivate->pageGroup.get());
+    WKPreferencesRef preferencesRef = WKPageConfigurationGetPreferences(webViewPrivate->pageConfiguration.get());
     switch (type) {
     case MinimumFontSize:
         return static_cast<unsigned>(WKPreferencesGetMinimumFontSize(preferencesRef));

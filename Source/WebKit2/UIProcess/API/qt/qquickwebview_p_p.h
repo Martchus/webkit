@@ -182,7 +182,7 @@ protected:
     RefPtr<WebKit::WebPageProxy> webPageProxy;
     WKRetainPtr<WKPageRef> webPage;
     WKRetainPtr<WKPageConfigurationRef> pageConfiguration;
-    WKRetainPtr<WKPageGroupRef> pageGroup;
+//    WKRetainPtr<WKPageGroupRef> pageGroup;
 
     WebKit::QtPageClient pageClient;
     WebKit::DefaultUndoController undoController;
