@@ -137,6 +137,9 @@ public:
     void forwardData();
     void sendResponseIfNeeded();
 
+    void continueWillSendRequest(const ResourceRequest&);
+    void continueDidReceiveResponse();
+
     static ResourceError errorForReply(QNetworkReply*);
 
 private Q_SLOTS:

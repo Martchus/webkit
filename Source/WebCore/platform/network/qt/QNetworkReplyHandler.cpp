@@ -620,7 +620,24 @@ void QNetworkReplyHandler::sendResponseIfNeeded()
         return;
     }
 
-    client->didReceiveResponse(m_resourceHandle, response);
+    if (client->usesAsyncCallbacks()) {
+        client->didReceiveResponseAsync(m_resourceHandle, response);
+    } else {
+        client->didReceiveResponse(m_resourceHandle, response);
+        continueDidReceiveResponse();
+    }
+}
+
+void QNetworkReplyHandler::continueWillSendRequest(const ResourceRequest& newRequest)
+{
+    if (wasAborted()) // Network error cancelled the request.
+        return;
+
+    m_request = newRequest.toNetworkRequest(m_resourceHandle->getInternal()->m_context.get());
+}
+
+void QNetworkReplyHandler::continueDidReceiveResponse()
+{
 }
 
 void QNetworkReplyHandler::redirect(ResourceResponse& response, const QUrl& redirection)
@@ -657,11 +674,15 @@ void QNetworkReplyHandler::redirect(ResourceResponse& response, const QUrl& redi
     if (!newRequest.url().protocolIs("https") && protocolIs(newRequest.httpReferrer(), "https") && m_resourceHandle->context()->shouldClearReferrerOnHTTPSToHTTPRedirect())
         newRequest.clearHTTPReferrer();
 
-    client->willSendRequest(m_resourceHandle, newRequest, response);
-    if (wasAborted()) // Network error cancelled the request.
-        return;
+    // QTFIXME
+    // cleanupSoupRequestOperation(handle);
 
-    m_request = newRequest.toNetworkRequest(m_resourceHandle->getInternal()->m_context.get());
+    if (client->usesAsyncCallbacks()) {
+        client->willSendRequestAsync(m_resourceHandle, newRequest, response);
+    } else {
+        client->willSendRequest(m_resourceHandle, newRequest, response);
+        continueWillSendRequest(newRequest);
+    }
 }
 
 void QNetworkReplyHandler::forwardData()
@@ -675,6 +696,15 @@ void QNetworkReplyHandler::forwardData()
     ResourceHandleClient* client = m_resourceHandle->client();
     if (!client)
         return;
+
+    // We have to use didReceiveBuffer instead of didReceiveData
+    // See https://bugs.webkit.org/show_bug.cgi?id=118598
+    // and https://bugs.webkit.org/show_bug.cgi?id=118448#c32
+    // NetworkResourceLoader implements only didReceiveBuffer and sends it over IPC to WebProcess
+
+    // See also https://codereview.qt-project.org/#/c/79565/
+    //
+    // FIXME: We need API to get unflattened array of data segments to convert it to non-contiguous SharedBuffer
 
     qint64 bytesAvailable = m_replyWrapper->reply()->bytesAvailable();
     Vector<char> buffer(8128); // smaller than 8192 to fit within 8k including overhead.
