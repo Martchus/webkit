@@ -52,6 +52,10 @@ QtNetworkAccessManager::QtNetworkAccessManager(WebProcess* webProcess)
 
 WebPage* QtNetworkAccessManager::obtainOriginatingWebPage(const QNetworkRequest& request)
 {
+    // QTFIXME: Old process model
+    if (!m_webProcess)
+        return nullptr;
+
     QObject* originatingObject = request.originatingObject();
     if (!originatingObject)
         return 0;

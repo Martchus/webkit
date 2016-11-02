@@ -148,9 +148,10 @@ public:
     
     const TextCheckerState& textCheckerState() const { return m_textCheckerState; }
 
-#if PLATFORM(QT)
-    QNetworkAccessManager* networkAccessManager() { return m_networkAccessManager; }
-#endif
+    // QTFIXME: leftover of old process model
+//#if PLATFORM(QT)
+//    QNetworkAccessManager* networkAccessManager() { return m_networkAccessManager; }
+//#endif
 
     void clearResourceCaches(ResourceCachesToClear = AllResourceCaches);
     
@@ -340,9 +341,10 @@ private:
 
     bool m_fullKeyboardAccessEnabled;
 
-#if PLATFORM(QT)
-    QNetworkAccessManager* m_networkAccessManager;
-#endif
+    // QTFIXME: leftover of old process model
+//#if PLATFORM(QT)
+//    QNetworkAccessManager* m_networkAccessManager { nullptr };
+//#endif
 
     HashMap<uint64_t, WebFrame*> m_frameMap;
 

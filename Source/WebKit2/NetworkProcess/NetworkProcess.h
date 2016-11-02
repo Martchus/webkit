@@ -41,6 +41,12 @@
 #include "WebSQLiteDatabaseTracker.h"
 #endif
 
+#if PLATFORM(QT)
+QT_BEGIN_NAMESPACE
+class QNetworkAccessManager;
+QT_END_NAMESPACE
+#endif
+
 namespace WebCore {
 class CertificateInfo;
 class NetworkStorageSession;
@@ -97,6 +103,10 @@ public:
 
 #if PLATFORM(COCOA)
     void clearHSTSCache(WebCore::NetworkStorageSession&, std::chrono::system_clock::time_point modifiedSince);
+#endif
+
+#if PLATFORM(QT)
+    QNetworkAccessManager* networkAccessManager() { return m_networkAccessManager; }
 #endif
 
     void prefetchDNS(const String&);
@@ -196,6 +206,10 @@ private:
 
 #if PLATFORM(IOS)
     WebSQLiteDatabaseTracker m_webSQLiteDatabaseTracker;
+#endif
+
+#if PLATFORM(QT)
+    QNetworkAccessManager* m_networkAccessManager { nullptr };
 #endif
 };
 

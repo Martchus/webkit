@@ -61,11 +61,15 @@ void WebProcess::platformSetCacheModel(CacheModel cacheModel)
 {
     uint64_t physicalMemorySizeInMegabytes = WTF::ramSize() / 1024 / 1024;
 
+    // QTFIXME: leftover of old process model
+#if 0
     // The Mac port of WebKit2 uses a fudge factor of 1000 here to account for misalignment, however,
     // that tends to overestimate the memory quite a bit (1 byte misalignment ~ 48 MiB misestimation).
     // We use 1024 * 1023 for now to keep the estimation error down to +/- ~1 MiB.
     QNetworkDiskCache* diskCache = qobject_cast<QNetworkDiskCache*>(m_networkAccessManager->cache());
     uint64_t freeVolumeSpace = !diskCache ? 0 : WebCore::getVolumeFreeSizeForPath(diskCache->cacheDirectory().toLocal8Bit().constData()) / 1024 / 1023;
+#endif
+    uint64_t freeVolumeSpace = 0;
 
     // The following variables are initialised to 0 because WebProcess::calculateCacheSizes might not
     // set them in some rare cases.
@@ -81,8 +85,11 @@ void WebProcess::platformSetCacheModel(CacheModel cacheModel)
                         cacheTotalCapacity, cacheMinDeadCapacity, cacheMaxDeadCapacity, deadDecodedDataDeletionInterval,
                         pageCacheCapacity, urlCacheMemoryCapacity, urlCacheDiskCapacity);
 
+    // QTFIXME: leftover of old process model
+#if 0
     if (diskCache)
         diskCache->setMaximumCacheSize(urlCacheDiskCapacity);
+#endif
 
     auto& memoryCache = MemoryCache::singleton();
     memoryCache.setCapacities(cacheMinDeadCapacity, cacheMaxDeadCapacity, cacheTotalCapacity);
@@ -113,20 +120,17 @@ void WebProcess::platformInitializeWebProcess(WebProcessCreationParameters&& par
     }
 #endif
 
+    // QTFIXME: leftover of old process model
+#if 0
     m_networkAccessManager = new QtNetworkAccessManager(this);
 
-    // QTFIXME
-#if ENABLE(SECCOMP_FILTERS)
     if (!parameters.cookieStorageDirectory.isEmpty()) {
         WebCore::SharedCookieJarQt* jar = WebCore::SharedCookieJarQt::create(parameters.cookieStorageDirectory);
         m_networkAccessManager->setCookieJar(jar);
         // Do not let QNetworkAccessManager delete the jar.
         jar->setParent(0);
     }
-#endif
 
-    // QTFIXME: leftover of old process model
-#if 0
     if (!parameters.diskCacheDirectory.isEmpty()) {
         QNetworkDiskCache* diskCache = new QNetworkDiskCache();
         diskCache->setCacheDirectory(parameters.diskCacheDirectory);
@@ -155,9 +159,12 @@ void WebProcess::platformInitializeWebProcess(WebProcessCreationParameters&& par
 
 void WebProcess::platformTerminate()
 {
+    // QTFIXME: leftover of old process model
+#if 0
     delete m_networkAccessManager;
     m_networkAccessManager = 0;
     WebCore::SharedCookieJarQt::shared()->destroy();
+#endif
 }
 
 } // namespace WebKit

@@ -27,11 +27,14 @@
 #include "config.h"
 #include "WebProcessPool.h"
 
+#include "NetworkProcessCreationParameters.h"
 #include "QtWebContext.h"
 #include "WKSharedAPICast.h"
+#include "WebCookieManagerProxy.h"
 #include "WebProcessCreationParameters.h"
 #include <QProcess>
 #include <WebCore/ApplicationCacheStorage.h>
+#include <WebCore/Language.h>
 
 #if ENABLE(GEOLOCATION)
 #include "WebGeolocationManagerProxy.h"
@@ -65,9 +68,11 @@ void WebProcessPool::platformInvalidateContext()
 {
 }
 
-void WebProcessPool::platformInitializeNetworkProcess(NetworkProcessCreationParameters&)
+void WebProcessPool::platformInitializeNetworkProcess(NetworkProcessCreationParameters& parameters)
 {
     // QTFIXME
+    parameters.cookiePersistentStoragePath = QtWebContext::preparedStoragePath(QtWebContext::CookieStorage);
+    parameters.languages = WebCore::userPreferredLanguages();
 }
 
 String WebProcessPool::platformDefaultIconDatabasePath() const

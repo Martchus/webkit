@@ -28,9 +28,11 @@
 #include "config.h"
 #include "RemoteNetworkingContext.h"
 
+#include "NetworkProcess.h"
 #include <WebCore/NetworkStorageSession.h>
 #include <WebCore/NotImplemented.h>
 #include <WebCore/ResourceHandle.h>
+#include <wtf/NeverDestroyed.h>
 
 using namespace WebCore;
 
@@ -53,6 +55,11 @@ void RemoteNetworkingContext::ensurePrivateBrowsingSession(SessionID)
 NetworkStorageSession& RemoteNetworkingContext::storageSession() const
 {
     return NetworkStorageSession::defaultStorageSession();
+}
+
+QNetworkAccessManager* RemoteNetworkingContext::networkAccessManager() const
+{
+     return NetworkProcess::singleton().networkAccessManager();
 }
 
 }
