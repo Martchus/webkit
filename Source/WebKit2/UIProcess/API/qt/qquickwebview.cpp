@@ -354,6 +354,7 @@ void QQuickWebViewPrivate::initialize(WKPageConfigurationRef configurationRef)
     webPage = toAPI(webPageProxy.get());
     pageToView()->insert(webPage.get(), this);
 
+    qDebug() << ">>> setUseFixedLayout <<<";
     webPageProxy->setUseFixedLayout(s_flickableViewportEnabled);
 #if ENABLE(FULLSCREEN_API)
     webPageProxy->fullScreenManager()->setWebView(q_ptr);
@@ -1880,6 +1881,8 @@ void QQuickWebView::setUrl(const QUrl& url)
 
     if (url.isEmpty())
         return;
+
+    qDebug() << Q_FUNC_INFO << url;
 
     WKRetainPtr<WKURLRef> u = adoptWK(WKURLCreateWithQUrl(url));
     WKPageLoadURL(d->webPage.get(), u.get());
