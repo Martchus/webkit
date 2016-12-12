@@ -1,6 +1,6 @@
 add_subdirectory(QtTestBrowser)
 
-if (ENABLE_API_TESTS)
+if (ENABLE_API_TESTS AND NOT ENABLE_WEBKIT2)
     add_subdirectory(TestWebKitAPI)
 endif ()
 
