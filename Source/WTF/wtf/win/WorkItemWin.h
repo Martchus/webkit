@@ -27,7 +27,7 @@
 #ifndef WorkItemWin_h
 #define WorkItemWin_h
 
-#include <Windows.h>
+#include <windows.h>
 #include <functional>
 #include <wtf/RefPtr.h>
 #include <wtf/ThreadSafeRefCounted.h>
